@@ -20,6 +20,29 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
+          livenessProbe:
+            httpGet:
+              path: /up
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /up
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 2
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
           env:
             - name: APP_KEY
               value: "base64:7IOYsI9QqtJZZljGLxjXOu08MO+mrl5JGySrl8n0ORY="
