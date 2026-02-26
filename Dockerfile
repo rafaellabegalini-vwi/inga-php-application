@@ -48,7 +48,9 @@ RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
 COPY . .
 
 # Instalar dependências PHP
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+RUN composer install --no-dev --optimize-autoloader --no-interaction \
+    && mkdir database \
+    && touch database/database.sqlite
 
 # Instalar dependências Node e build dos assets
 RUN npm ci && npm run build
