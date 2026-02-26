@@ -50,7 +50,7 @@ COPY . .
 # Instalar dependências PHP
 RUN composer install --no-dev --optimize-autoloader --no-interaction \
     && touch database/database.sqlite \
-    && php artisan migrate
+    && php artisan migrate --force
 
 # Instalar dependências Node e build dos assets
 RUN npm ci && npm run build
