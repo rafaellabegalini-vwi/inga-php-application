@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inga-php-application-queue-worker
+  labels:
+    app: inga-php-application-queue-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inga-php-application-queue-worker
+  template:
+    metadata:
+      labels:
+        app: inga-php-application-queue-worker
+    spec:
+      containers:
+        - name: queue-worker
+          image: registry.vivaweb.dev.br/library/inga-php-application:54ae3fe
+          imagePullPolicy: Always
+          command:
+            - php
+            - artisan
+            - queue:work
+            - --sleep=3
+            - --max-jobs=1000
+            - --tries=3
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          env:
+            - name: APP_KEY
+              value: "base64:7IOYsI9QqtJZZljGLxjXOu08MO+mrl5JGySrl8n0ORY="
+            - name: LOG_CHANNEL
+              value: "stderr"
+            - name: SESSION_DRIVER
+              value: "array"
+            - name: QUEUE_CONNECTION
+              value: "redis"
+            - name: CACHE_DRIVER
+              value: "array"

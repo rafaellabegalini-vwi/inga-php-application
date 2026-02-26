@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    - host: inga.vivaweb.dev.br
+    - host: ingaphp.vivaweb.dev.br
       http:
         paths:
           - path: /

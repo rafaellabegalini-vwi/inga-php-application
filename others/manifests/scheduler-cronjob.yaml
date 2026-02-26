@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: inga-php-application-scheduler
+  labels:
+    app: inga-php-application-scheduler
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: scheduler
+              image: registry.vivaweb.dev.br/library/inga-php-application:54ae3fe
+              imagePullPolicy: Always
+              command:
+                - php
+                - artisan
+                - schedule:run
+              resources:
+                requests:
+                  memory: "128Mi"
+                  cpu: "50m"
+                limits:
+                  memory: "256Mi"
+                  cpu: "200m"
+              env:
+                - name: APP_KEY
+                  value: "base64:7IOYsI9QqtJZZljGLxjXOu08MO+mrl5JGySrl8n0ORY="
+                - name: LOG_CHANNEL
+                  value: "stderr"
+                - name: SESSION_DRIVER
+                  value: "array"
+                - name: QUEUE_CONNECTION
+                  value: "sync"
+                - name: CACHE_DRIVER
+                  value: "array"
