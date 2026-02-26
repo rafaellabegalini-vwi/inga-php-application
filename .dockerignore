@@ -1,0 +1,32 @@
+# Dependências (serão instaladas no build)
+/vendor
+/node_modules
+
+# Versionamento e IDE
+/.git
+/.idea
+/.vscode
+*.swp
+*.swo
+
+# Ambiente local
+.env
+.env.local
+.env.*.local
+
+# Logs e cache
+/storage/logs/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/bootstrap/cache/*
+
+# Testes e cobertura
+.phpunit.result.cache
+/coverage
+.phpunit.cache
+
+# Documentação e outros
+README.md
+Dockerfile
+.dockerignore
