@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inga-php-application
+  labels:
+    app: inga-php-application
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inga-php-application
+  template:
+    metadata:
+      labels:
+        app: inga-php-application
+    spec:
+      containers:
+        - name: app
+          image: registry.vivaweb.dev.br/library/inga-php-application:54ae3fe
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          env:
+            - name: APP_KEY
+              value: "base64:7IOYsI9QqtJZZljGLxjXOu08MO+mrl5JGySrl8n0ORY="
+            - name: LOG_CHANNEL
+              value: "stderr"
